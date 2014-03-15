@@ -1,6 +1,6 @@
 # grunt-cptpl
 
-> compile the file to be a javascript template function
+> Compiled template files into JavaScript files
 
 ## Getting Started
 This plugin requires Grunt `~0.4.4`

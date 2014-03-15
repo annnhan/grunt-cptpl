@@ -1,42 +1,40 @@
 {
-  "name": "grunt-cptpl",
-  "description": "compile the file to be a javascript template function",
-  "version": "0.1.0",
-  "homepage": "https://github.com/hanan198501/grunt-cptpl",
-  "author": {
-    "name": "hanan",
-    "email": "hanan321@qq.com",
-    "url": "http://cssha.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hanan198501/grunt-cptpl.git"
-  },
-  "bugs": {
-    "url": "https://github.com/hanan198501/grunt-cptpl/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/hanan198501/grunt-cptpl/blob/master/LICENSE-MIT"
-    }
-  ],
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "devDependencies": {
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.4"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.4"
-  },
-  "keywords": [
-    "gruntplugin"
-  ]
+    "name": "grunt-cptpl",
+    "description": "Compiled template files into a JavaScript files",
+    "version": "0.1.0",
+    "homepage": "https://github.com/hanan198501/grunt-cptpl",
+    "author": {
+        "name": "hanan",
+        "email": "hanan321@qq.com",
+        "url": "http://cssha.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hanan198501/grunt-cptpl.git"
+    },
+    "bugs": {
+        "url": "https://github.com/hanan198501/grunt-cptpl/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/hanan198501/grunt-cptpl/blob/master/LICENSE-MIT"
+        }
+    ],
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "devDependencies": {
+        "grunt-contrib-clean": "~0.4.0",
+        "grunt": "~0.4.4"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.4"
+    },
+    "keywords": [
+        "gruntplugin"
+    ]
 }
