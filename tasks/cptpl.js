@@ -11,24 +11,55 @@
 module.exports = function (grunt) {
 
     var ENGINES_MAP = {
-        hogan: function (t) {return 'Hogan.compile(\'' + t + '\');'}
+        hogan: function (t) {
+            return 'Hogan.compile(\'' + t + '\');'
+        },
+
+        handlebars: function (t) {
+            return 'Handlebars.compile(\'' + t + '\');'
+        },
+
+        underscore: function (t) {
+            return '_.template(\'' + t + '\');'
+        },
+
+        juicer: function (t) {
+            return 'juicer(\'' + t + '\');'
+        },
+
+        dot: function (t) {
+            return 'doT.template(\'' + t + '\');'
+        },
+
+        kissy: function (t) {
+            return 'KISSY.Template(\'' + t + '\');'
+        },
+
+        baidutemplate: function (t) {
+            return 'baidu.template(\'' + t + '\');'
+        }
     }
+
+    var ln = grunt.util.normalizelf('\r\n');
 
     grunt.registerMultiTask('cptpl', 'Compiled template files into JavaScript files', function () {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            engine: 'hogan',
+            engine: 'handlebars',
             context: 'window',
             banner: '',
-            rename: function (name) {
-                return name;
-            }
+            rename: function (name) {return name;},
+            addEngines: {}
         });
+
+        for(var key in options.addEngines){
+            ENGINES_MAP[key] = options.addEngines[key];
+        }
 
         // Iterate over all specified file groups.
         this.files.forEach(function (f) {
 
-            // filte specified files.
+            // Filte specified files.
             var src = f.src.filter(function (filepath) {
                 // Warn on and remove invalid source files (if nonull was set).
                 if (!grunt.file.exists(filepath)) {
@@ -45,17 +76,32 @@ module.exports = function (grunt) {
                     };
             });
 
-            // ouput into js files
+            // Ouput into js files
             src.forEach(function (item, i, src) {
+                var start, end;
                 var dest = f.dest.charAt(f.dest.length-1) === '/' ? f.dest : f.dest + '/';
                 var name = options.rename(item.name);
-                var content = ';' + options.context + '.' + name + '=' +
-                    ENGINES_MAP[options.engine](item.content
+                var content = ENGINES_MAP[options.engine](item.content
                     .replace(/\n|\r|\r\n|\t/gi, '')
                     .replace(/\"/gi, '\\\"')
                     .replace(/\'/gi, '\\\'')
                     .trim()
                 );
+
+                switch (options.context){
+                    case 'AMD':
+                        start = ';define(function() { ' + ln + '    return ';
+                        end   = ln + '});'
+                        break;
+                    case 'CMD':
+                        start = ';define(function(require, exports, module) {' + ln + '    module.exports = ';
+                        end   = ln + '});'
+                        break;
+                    default:
+                        start = ';' + options.context + '.' + name + ' = ';
+                        end   = '';
+                }
+                content = options.banner + start + content + end;
                 grunt.file.write(dest + name + '.js', content);
             });
 

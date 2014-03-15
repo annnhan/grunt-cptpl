@@ -28,12 +28,18 @@ module.exports = function (grunt) {
             },
             test2: {
                 options: {
-                    rename: function(name){return '__' + name;},
-                    banner: ' /*BANNER*/\n',
-                    context: 'window.ui.templates'
+                    rename: function(name){return '_' + name;},
+                    banner: '/*BANNER*/\n',
+                    context: 'CMD',
+                    engine: 'myEngine',
+                    addEngines: {
+                        myEngine: function (t) {
+                            return 'myEngine.compile(\'' + t + '\');'
+                        }
+                    }
                 },
                 files: {
-                    'tmp/test2/': ['test/fixtures/*.html']
+                    'tmp/test2/': ['test/fixtures/*']
                 }
             }
         }
