@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             test1: {
                 options: {
                 },
-                src: ['test/fixtures/testing', 'test/fixtures/abc.html'],
+                src: ['test/html/testing.txt', 'test/html/abc.html'],
                 dest: 'tmp/test1/'
             },
             test2: {
@@ -39,7 +39,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'tmp/test2/': ['test/fixtures/*']
+                    'tmp/test2/': ['test/html/*']
                 }
             }
         }
