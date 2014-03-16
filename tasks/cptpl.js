@@ -46,9 +46,9 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('cptpl', 'Compiled template files into JavaScript files', function () {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
+            banner: '',
             engine: 'handlebars',
             context: 'window',
-            banner: '',
             reName: function (name) {return name;},
             customEngines: {}
         });

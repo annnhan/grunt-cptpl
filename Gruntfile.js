@@ -20,26 +20,13 @@ module.exports = function (grunt) {
 
         // Configuration to be run (and then tested).
         cptpl: {
-            test1: {
+            test: {
                 options: {
-                },
-                src: ['test/html/testing.txt', 'test/html/abc.html'],
-                dest: 'tmp/test1/'
-            },
-            test2: {
-                options: {
-                    rename: function(name){return '_' + name;},
                     banner: '/*BANNER*/\n',
-                    context: 'CMD',
-                    engine: 'myEngine',
-                    customEngines: {
-                        myEngine: function (t) {
-                            return 'myEngine.compile(\'' + t + '\');'
-                        }
-                    }
+                    engine: 'dot'
                 },
                 files: {
-                    'tmp/test2/': ['test/html/*']
+                    'tmp/': ['test/html/abc.html']
                 }
             }
         }
