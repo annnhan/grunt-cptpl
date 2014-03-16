@@ -23,7 +23,7 @@ grunt.loadNpmTasks('grunt-cptpl');
 ## 配置 "cptpl" task
 
 ### 概观
-在项目的Gruntfile文件中， 有一个grunt.initConfig()方法， 在里面添加一个`cptpl`数据对象。 options为目标任务的自定义选项，选填。 files为文件列表的输出目录和对应的原文件列表。如下面代码里， `['test/html/abc.html', 'test/html/abc2.html'， 'mytemplate/*']` 为原文件列表， 'tmp/' 为输出的目录，支持通配符 `*`。
+在项目的Gruntfile文件中， 有一个grunt.initConfig()方法， 在里面添加一个`cptpl`数据对象。 options为目标任务的自定义选项，选填。 files为文件列表的输出目录和对应的原文件列表。如下面代码里， `['test/html/abc.html', 'test/html/abc2.html'， 'mytemplate/*']` 为原文件列表， `'tmp/'` 为输出的目录，支持通配符 `*`。
 
 ```js
 grunt.initConfig({
@@ -91,7 +91,7 @@ Type: `String` ， Default value: `'window'`
 Example：
 
 ```js
-// context: 'myObj'
+
 cptpl: {
     test: {
         options: {
@@ -103,23 +103,13 @@ cptpl: {
         }
     }
 }
+
+// context: 'myObj'
 // abc.js ==>
 ;myObj.abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
 
 
-
 // context: '{AMD}'
-cptpl: {
-    test: {
-        options: {
-            engine: 'dot',
-            context: '{AMD}'
-        },
-        files: {
-            'tmp/': ['test/html/abc.html']
-        }
-    }
-}
 // abc.js ==>
 ;define(function() {
     return doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
@@ -127,17 +117,6 @@ cptpl: {
 
 
 // context: '{CMD}'
-cptpl: {
-    test: {
-        options: {
-            engine: 'dot',
-            context: '{CMD}'
-        },
-        files: {
-            'tmp/': ['test/html/abc.html']
-        }
-    }
-}
 // abc.js ==>
 ;define(function(require, exports, module) {
     module.exports = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
