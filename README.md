@@ -23,18 +23,22 @@ grunt.loadNpmTasks('grunt-cptpl');
 ## 配置 "cptpl" task
 
 ### 概观
-在项目的Gruntfile文件中， 有一个grunt.initConfig()方法， 在里面添加一个`cptpl`数据对象。
+在项目的Gruntfile文件中， 有一个grunt.initConfig()方法， 在里面添加一个`cptpl`数据对象。 options为目标任务的自定义选项，选填。 files为文件列表的输出目录和对应的原文件列表。如下面代码里， `['test/html/abc.html', 'test/html/abc2.html'， 'mytemplate/*']` 为原文件列表， 'tmp/' 为输出的目录，支持通配符 `*`。
 
 ```js
 grunt.initConfig({
-  cptpl: {
-    options: {
-      // 任务特定的选项放在这里。
+    cptpl: {
+        your_target: {
+            options: {
+                // 任务特定的选项放在这里
+            },
+            files: {
+                // 目标特定的文件列表放在这里
+                'tmp/': ['test/html/abc.html', 'test/html/abc2.html'， 'mytemplate/*']
+            }
+
+        },
     },
-    your_target: {
-      // 目标特定的文件列表或选项放在这里
-    },
-  },
 });
 ```
 
@@ -50,7 +54,7 @@ Type: `String` ， Default value: `'handlebars'`
 
 指定模板引擎，内置支持的模板引擎有（注意要小写）： `'handlebars'` 、 `'hogan'` 、 `'underscore'` 、 `'juicer'` 、 `'dot'` 、 `'kissy'` 、 `'baidutemplate'`。
 
-示例： 运行下面cptpl任务，将会把 `test/html/` 目录下的 `abc.html` 编译成 `abc.js` ， 存放在 `tmp/` 目录。
+Example： 运行下面cptpl任务，将会把 `test/html/` 目录下的 `abc.html` 编译成 `abc.js` ， 存放在 `tmp/` 目录。
 
 ```js
 cptpl: {
@@ -79,6 +83,87 @@ cptpl: {
 ;window.abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
 ```
 
+#### options.context
+Type: `String` ， Default value: `'window'`
+
+指定生成的javascript文件中编译好的模板函数的上下文对象， 如果此选项的值为 `'{AMD}'`，则把编译好的模板函数包装成一个AMD模块，如果此选项的值为 `'{CMD}'`， 则把编译好的模板函数包装成一个CMD模块。
+
+Example：
+
+```js
+// context: 'myObj'
+cptpl: {
+    test: {
+        options: {
+            engine: 'dot',
+            context: 'myObj'
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+// abc.js ==>
+;myObj.abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+
+
+
+// context: '{AMD}'
+cptpl: {
+    test: {
+        options: {
+            engine: 'dot',
+            context: '{AMD}'
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+// abc.js ==>
+;define(function() {
+    return doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+});
+
+
+// context: '{CMD}'
+cptpl: {
+    test: {
+        options: {
+            engine: 'dot',
+            context: '{CMD}'
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+// abc.js ==>
+;define(function(require, exports, module) {
+    module.exports = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+});
+```
+
+
+#### options.banner
+Type: `String` ， Default value: `''`
+
+在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
+
+#### options.banner
+Type: `String` ， Default value: `''`
+
+在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
+
+#### options.banner
+Type: `String` ， Default value: `''`
+
+在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
+
+#### options.banner
+Type: `String` ， Default value: `''`
+
+在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
 
 ### Usage Examples
 

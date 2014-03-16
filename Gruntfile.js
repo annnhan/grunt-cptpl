@@ -22,8 +22,8 @@ module.exports = function (grunt) {
         cptpl: {
             test: {
                 options: {
-                    banner: '/*BANNER*/\n',
-                    engine: 'dot'
+                    engine: 'dot',
+                    context: '{CMD}'
                 },
                 files: {
                     'tmp/': ['test/html/abc.html']
