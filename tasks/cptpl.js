@@ -12,31 +12,31 @@ module.exports = function (grunt) {
 
     var ENGINES_MAP = {
         hogan: function (t) {
-            return 'Hogan.compile(\'' + t + '\');'
+            return 'Hogan.compile(' + t + ');'
         },
 
         handlebars: function (t) {
-            return 'Handlebars.compile(\'' + t + '\');'
+            return 'Handlebars.compile(' + t + ');'
         },
 
         underscore: function (t) {
-            return '_.template(\'' + t + '\');'
+            return '_.template(' + t + ');'
         },
 
         juicer: function (t) {
-            return 'juicer(\'' + t + '\');'
+            return 'juicer(' + t + ');'
         },
 
         dot: function (t) {
-            return 'doT.template(\'' + t + '\');'
+            return 'doT.template(' + t + ');'
         },
 
         kissy: function (t) {
-            return 'KISSY.Template(\'' + t + '\');'
+            return 'KISSY.Template(' + t + ');'
         },
 
         baidutemplate: function (t) {
-            return 'baidu.template(\'' + t + '\');'
+            return 'baidu.template(' + t + ');'
         }
     }
 
@@ -82,11 +82,11 @@ module.exports = function (grunt) {
                 var start, end;
                 var dest = f.dest.charAt(f.dest.length-1) === '/' ? f.dest : f.dest + '/';
                 var name = options.reName(item.name);
-                var content = ENGINES_MAP[options.engine](item.content
+                var content = ENGINES_MAP[options.engine]('\'' + item.content
                     .replace(/\n|\r|\r\n|\t/gi, '')
                     .replace(/\"/gi, '\\\"')
                     .replace(/\'/gi, '\\\'')
-                    .trim()
+                    .trim() + '\''
                 );
 
                 switch (options.context){

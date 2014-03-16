@@ -22,9 +22,11 @@ module.exports = function (grunt) {
         cptpl: {
             test: {
                 options: {
-                    engine: 'dot',
-                    reName: function (name) {
-                        return '__' + name;
+                    engine: 'myEngine',
+                    customEngines: {
+                        myEngine: function (t) {
+                            return 'myEngine.compile(' + t + ');'
+                        }
                     }
                 },
                 files: {

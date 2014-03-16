@@ -91,7 +91,6 @@ Type: `String` ， Default value: `'window'`
 Example：
 
 ```js
-
 cptpl: {
     test: {
         options: {
@@ -150,63 +149,39 @@ cptpl: {
 ;window.__abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
 ```
 
-#### options.banner
-Type: `String` ， Default value: `''`
+#### options.customEngines
+Type: `Object` ， Default value: `{}`
 
-在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
+自定义模板引擎预编译包裹方法。如果内置模板引擎无法满足您，可以通过此选项设置一个你需要的模板引擎预编译包裹方法。格式为 `{name: function(t){}}`， `name`为模板引擎名， 对应的`function(t){}`就是包裹方法，接受一个参数t， t为模板文件的文本内容， 您可以拼成用编译函数包裹起来的js代码，并把包裹后的结果作为函数返回值。
 
-#### options.banner
-Type: `String` ， Default value: `''`
-
-在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
-
-#### options.banner
-Type: `String` ， Default value: `''`
-
-在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Example：
 
 ```js
-grunt.initConfig({
-  cptpl: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
+cptpl: {
+    test: {
+        options: {
+            engine: 'myEngine',
+            customEngines: {
+                myEngine: function (t) {
+                    return 'myEngine.compile(' + t + ');'
+                }
+            }
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+
+// abc.js ==>
+;window.abc = myEngine.compile('<h1>{{title}}</h1><p>{{content}}</p>');
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
-```js
-grunt.initConfig({
-  cptpl: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
-
-====================================
 
 Here is my broken English introduction
+====================================
 
 # grunt-cptpl
 
@@ -247,50 +222,139 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.banner
+Type: `String` ， Default value: `''`
 
-A string value that is used to do something with whatever.
+Javascript text files generated at the beginning of the writing, usually some javascript annotation text, such as `/*BANNER*/`
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.engine
+Type: `String` ， Default value: `'handlebars'`
 
-A string value that is used to do something else with whatever else.
+Specify a template engine, template engine has built-in support (note the lowercase)： `'handlebars'` 、 `'hogan'` 、 `'underscore'` 、 `'juicer'` 、 `'dot'` 、 `'kissy'` 、 `'baidutemplate'`。
 
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Example：
 
 ```js
-grunt.initConfig({
-  cptpl: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+cptpl: {
+    test: {
+        options: {
+            banner: '/*BANNER*/\n',
+            engine: 'dot'
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+```
+
+`abc.html` and `abc.js` content as：
+
+```js
+// abc.html ==>
+<h1>{{title}}</h1>
+<p>{{content}}</p>
+
+
+// abc.js ==>
+/*BANNER*/
+;window.abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+```
+
+#### options.context
+Type: `String` ， Default value: `'window'`
+
+Generated javascript file specified context object compiled template function, if the value of this option `'{AMD}'`, put the compiled template functions packed into an AMD module, if this option is `'{CMD} '`, put the compiled template functions packed into a CMD module.
+
+Example：
+
+```js
+cptpl: {
+    test: {
+        options: {
+            engine: 'dot',
+            context: 'myObj'
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+
+// context: 'myObj'
+// abc.js ==>
+;myObj.abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+
+
+// context: '{AMD}'
+// abc.js ==>
+;define(function() {
+    return doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+});
+
+
+// context: '{CMD}'
+// abc.js ==>
+;define(function(require, exports, module) {
+    module.exports = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+
+#### options.reName
+Type: `Function` ， Default value: `function (name) {return name;}`
+
+Rename method accepts one parameter, the parameter value is the name of the source file, the return value will be mounted as generated javascript file name, and the template function context object property name of this method.
+
+Example： Before the filename following code will generate javascript are plus `__`, `abc.html` will generate `__abc.js`.
 
 ```js
-grunt.initConfig({
-  cptpl: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
+cptpl: {
+    test: {
+        options: {
+            engine: 'dot',
+            reName: function (name) {
+                return '__' + name;
+            }
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+
+// __abc.js ==>
+;window.__abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
 ```
+
+#### options.customEngines
+Type: `Object` ， Default value: `{}`
+
+Custom template engine precompiled package methods. If the engine does not meet your built-in templates, you can set this option you need a template engine precompiled package methods. The format is `{name: function (t) {}}`, `name` is the name of a template engine, the corresponding `function (t) {}` is wrapped method accepts a parameter t, t text file as a template, You can spell wrapped up with a compiled function js code, and the results after parcel as function return values.
+
+Example：
+
+```js
+cptpl: {
+    test: {
+        options: {
+            engine: 'myEngine',
+            customEngines: {
+                myEngine: function (t) {
+                    return 'myEngine.compile(' + t + ');'
+                }
+            }
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+
+// abc.js ==>
+;window.abc = myEngine.compile('<h1>{{title}}</h1><p>{{content}}</p>');
+```
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
