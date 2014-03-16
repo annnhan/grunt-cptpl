@@ -1,11 +1,10 @@
 # grunt-cptpl
+grunt-cptpl插件可以将您的文本模板文件编译成javascript文件。在前端开发的时候，模板文本我们一般存放在一个隐藏dom节点，再通过javascript去获取这个节点的内容，将其编译。或者在写javascript的时候，我们手动通过拼接字符串的方式储存模板文本。grunt-cptpl使前端开发也可以向后端一样，把模板文本存放在单独的文件中，使我们的开发工作从繁琐的dom操作和拼串中解放出来，大大提高我们的工作效率。最主要的，模板文件作为单独文件存放，可以使我们的项目代码逻辑更加清晰，更具可维护性。
 
-> Compiled template files into JavaScript files
+## 入门
+这个插件需要Grunt `~0.4.4`
 
-## Getting Started
-This plugin requires Grunt `~0.4.4`
-
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+如果你还没有使用国 [Grunt](http://gruntjs.com/), 务必阅读以下它的 [入门](http://gruntjs.com/getting-started) 指南, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
 npm install grunt-cptpl --save-dev
@@ -90,13 +89,11 @@ _(Nothing yet)_
 
 ====================================
 
-Then my broken English introduction:
-
-====================================
+Here is my broken English introduction
 
 # grunt-cptpl
 
-> Compiled template files into JavaScript files
+> Compiled template files into JavaScript files.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.4`
