@@ -124,10 +124,31 @@ cptpl: {
 ```
 
 
-#### options.banner
-Type: `String` ， Default value: `''`
+#### options.reName
+Type: `Function` ， Default value: `function (name) {return name;}`
 
-在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
+重命名方法，接受一个参数，参数值为源文件名， 此方法的返回值将作为生成的javascript文件名，以及模板函数挂载到的上下文对象属性名。
+
+Example： 下面代码将生成的javascript文件名前面都加上 `__`， `abc.html` 将生成 `__abc.js`。
+
+```js
+cptpl: {
+    test: {
+        options: {
+            engine: 'dot',
+            reName: function (name) {
+                return '__' + name;
+            }
+        },
+        files: {
+            'tmp/': ['test/html/abc.html']
+        }
+    }
+}
+
+// __abc.js ==>
+;window.__abc = doT.template('<h1>{{title}}</h1><p>{{content}}</p>');
+```
 
 #### options.banner
 Type: `String` ， Default value: `''`

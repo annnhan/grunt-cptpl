@@ -23,7 +23,9 @@ module.exports = function (grunt) {
             test: {
                 options: {
                     engine: 'dot',
-                    context: '{CMD}'
+                    reName: function (name) {
+                        return '__' + name;
+                    }
                 },
                 files: {
                     'tmp/': ['test/html/abc.html']
