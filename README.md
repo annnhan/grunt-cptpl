@@ -37,14 +37,12 @@ grunt.initConfig({
 ### 选项
 
 #### options.banner
-Type: `String`
-Default value: `''`
+Type: `String` ， &nbsp; &nbsp; Default value: `''`
 
 在生成的javascript文件开头写入的文本信息，通常为一段javascript注释文字，如 `/*BANNER*/`
 
 #### options.engine
-Type: `String`
-Default value: `'handlebars'`
+Type: `String` ， &nbsp; &nbsp; Default value: `'handlebars'`
 
 指定模板引擎，内置支持的模板引擎有（注意要小写）： `'handlebars'` 、 `'hogan'` 、 `'underscore'` 、 `'juicer'` 、 `'dot'` 、 `'kissy'` 、 `'baidutemplate'`。
 
