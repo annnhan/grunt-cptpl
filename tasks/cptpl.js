@@ -90,11 +90,11 @@ module.exports = function (grunt) {
                 );
 
                 switch (options.context){
-                    case 'AMD':
+                    case '{AMD}':
                         start = ';define(function() { ' + ln + '    return ';
                         end   = ln + '});'
                         break;
-                    case 'CMD':
+                    case '{CMD}':
                         start = ';define(function(require, exports, module) {' + ln + '    module.exports = ';
                         end   = ln + '});'
                         break;
