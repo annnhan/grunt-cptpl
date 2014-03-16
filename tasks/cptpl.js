@@ -41,6 +41,7 @@ module.exports = function (grunt) {
     }
 
     var ln = grunt.util.normalizelf('\r\n');
+    var fileNameReg = /\/([^\/\\]+?)(\.[a-zA-z\d]+)?$/gi;
 
     grunt.registerMultiTask('cptpl', 'Compiled template files into JavaScript files', function () {
         // Merge task-specific and/or target-specific options with these defaults.
@@ -48,12 +49,12 @@ module.exports = function (grunt) {
             engine: 'handlebars',
             context: 'window',
             banner: '',
-            rename: function (name) {return name;},
-            addEngines: {}
+            reName: function (name) {return name;},
+            customEngines: {}
         });
 
-        for(var key in options.addEngines){
-            ENGINES_MAP[key] = options.addEngines[key];
+        for(var key in options.customEngines){
+            ENGINES_MAP[key] = options.customEngines[key];
         }
 
         // Iterate over all specified file groups.
@@ -72,7 +73,7 @@ module.exports = function (grunt) {
                     // Read file source.
                     return {
                         content: grunt.file.read(filepath),
-                        name: /\/([^\/\\]+?)(\.[a-zA-z\d]+)?$/gi.exec(filepath)[1]
+                        name: fileNameReg.exec(filepath)[1]
                     };
             });
 
@@ -80,7 +81,7 @@ module.exports = function (grunt) {
             src.forEach(function (item, i, src) {
                 var start, end;
                 var dest = f.dest.charAt(f.dest.length-1) === '/' ? f.dest : f.dest + '/';
-                var name = options.rename(item.name);
+                var name = options.reName(item.name);
                 var content = ENGINES_MAP[options.engine](item.content
                     .replace(/\n|\r|\r\n|\t/gi, '')
                     .replace(/\"/gi, '\\\"')

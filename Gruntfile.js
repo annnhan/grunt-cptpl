@@ -32,7 +32,7 @@ module.exports = function (grunt) {
                     banner: '/*BANNER*/\n',
                     context: 'CMD',
                     engine: 'myEngine',
-                    addEngines: {
+                    customEngines: {
                         myEngine: function (t) {
                             return 'myEngine.compile(\'' + t + '\');'
                         }
