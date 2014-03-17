@@ -34,7 +34,7 @@ grunt.initConfig({
             },
             files: {
                 // 目标特定的文件列表放在这里
-                'tmp/': ['test/html/abc.html', 'test/html/abc2.html'， 'mytemplate/*']
+                'tmp/': ['test/html/abc.html', 'test/html/abc2.html', 'mytemplate/*']
             }
 
         },
