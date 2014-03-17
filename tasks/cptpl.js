@@ -19,6 +19,10 @@ module.exports = function (grunt) {
             return 'Handlebars.compile(' + t + ');'
         },
 
+        arttemplate: function (t) {
+            return 'template.compile(' + t + ');'
+        },
+
         underscore: function (t) {
             return '_.template(' + t + ');'
         },
@@ -54,7 +58,7 @@ module.exports = function (grunt) {
         });
 
         for(var key in options.customEngines){
-            ENGINES_MAP[key] = options.customEngines[key];
+            ENGINES_MAP[key.toLowerCase()] = options.customEngines[key];
         }
 
         // Iterate over all specified file groups.
@@ -82,7 +86,7 @@ module.exports = function (grunt) {
                 var start, end;
                 var dest = f.dest.charAt(f.dest.length-1) === '/' ? f.dest : f.dest + '/';
                 var name = options.reName(item.name);
-                var content = ENGINES_MAP[options.engine]('\'' + item.content
+                var content = ENGINES_MAP[options.engine.toLowerCase()]('\'' + item.content
                     .replace(/\n|\r|\r\n|\t/gi, '')
                     .replace(/\"/gi, '\\\"')
                     .replace(/\'/gi, '\\\'')

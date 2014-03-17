@@ -52,7 +52,7 @@ Type: `String` ， Default value: `''`
 #### options.engine
 Type: `String` ， Default value: `'handlebars'`
 
-指定模板引擎，内置支持的模板引擎有（注意要小写）： `'handlebars'` 、 `'hogan'` 、 `'underscore'` 、 `'juicer'` 、 `'dot'` 、 `'kissy'` 、 `'baidutemplate'`。
+指定模板引擎，内置支持的模板引擎有： `'arTtemplate'` 、  `'Handlebars'` 、 `'Hogan'` 、 `'underscore'` 、 `'juicer'` 、 `'doT'` 、 `'kissy'` 、 `'baiduTemplate'`。
 
 Example： 运行下面cptpl任务，将会把 `test/html/` 目录下的 `abc.html` 编译成 `abc.js` ， 存放在 `tmp/` 目录。
 

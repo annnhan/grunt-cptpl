@@ -22,12 +22,8 @@ module.exports = function (grunt) {
         cptpl: {
             test: {
                 options: {
-                    engine: 'myEngine',
-                    customEngines: {
-                        myEngine: function (t) {
-                            return 'myEngine.compile(' + t + ');'
-                        }
-                    }
+                    engine: 'arTtemplate',
+                    context: '{CMD}'
                 },
                 files: {
                     'tmp/': ['test/html/abc.html']
