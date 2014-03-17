@@ -230,7 +230,7 @@ Javascript text files generated at the beginning of the writing, usually some ja
 #### options.engine
 Type: `String` ， Default value: `'handlebars'`
 
-Specify a template engine, template engine has built-in support (note the lowercase)： `'handlebars'` 、 `'hogan'` 、 `'underscore'` 、 `'juicer'` 、 `'dot'` 、 `'kissy'` 、 `'baidutemplate'`。
+Specify a template engine, template engine has built-in support: `'arTtemplate'` , `'handlebars'` , `'hogan'` , `'underscore'` , `'juicer'` , `'dot'` , `'kissy'` , `'baidutemplate'`.
 
 Example：
 
