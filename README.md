@@ -2,12 +2,14 @@
 
 grunt-cptpl使前端开发也可以像后端一样，把模板文本存放在单独的文件中（而不是放在dom节点但或者手工js拼接字符串）， 然后将其编译成javascript文件。使我们的开发工作从繁琐的dom操作和JS拼串中解放出来，提高我们的开发效率。最主要的，模板文件作为单独文件存放，可以使我们的项目代码逻辑更加清晰，更具可维护性。
 
-内置支持各大主流模板引擎：artTemplate’、 Handlebars 、Hogan 、 Underscore、 juicer、 doT、 kissy、 baiduTemplate。 对于不在此列的引擎，提供了自定义编译方法接口。
+grunt-cptpl支持各大主流模板引擎：artTemplate’、 Handlebars 、Hogan 、 Underscore、 juicer、 doT、 kissy、 baiduTemplate。 对于不在此列的引擎，提供了自定义编译方法接口。
 
 #####grunt-cptpl都做了啥？
+
 grunt-cptpl会读取每个模板文件的文本内容，用指定模板引擎的预编译方法将其包裹起来，生成一个新的javascript文件。这个javascript文件文件里面的内容，其实就是模板引擎的预编译方法调用，传入的参数为模板文件的文本内容。这样我们就有了一个编译好的模板函数，要渲染的时候把数据传给它就好了。
 
 ## 入门
+
 这个插件需要Grunt `~0.4.4`
 
 如果你还没有使用过[Grunt](http://gruntjs.com/), 务必阅读一下它的[入门](http://gruntjs.com/getting-started)指南, 里面介绍了如何创建一个[Grunt配置文件](http://gruntjs.com/sample-gruntfile)以及如何安装和使用grunt插件。一旦你熟悉这个过程，你可以使用如下命令安装grunt-cptpl。
