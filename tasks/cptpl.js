@@ -12,39 +12,39 @@ module.exports = function (grunt) {
 
     var ENGINES_MAP = {
         hogan: function (t) {
-            return 'Hogan.compile(' + t + ');'
+            return 'Hogan.compile(' + t + ');';
         },
 
         handlebars: function (t) {
-            return 'Handlebars.compile(' + t + ');'
+            return 'Handlebars.compile(' + t + ');';
         },
 
         arttemplate: function (t) {
-            return 'template.compile(' + t + ');'
+            return 'template.compile(' + t + ');';
         },
 
         underscore: function (t) {
-            return '_.template(' + t + ');'
+            return '_.template(' + t + ');';
         },
 
         juicer: function (t) {
-            return 'juicer(' + t + ');'
+            return 'juicer(' + t + ');';
         },
 
         dot: function (t) {
-            return 'doT.template(' + t + ');'
+            return 'doT.template(' + t + ');';
         },
 
         kissy: function (t) {
-            return 'KISSY.Template(' + t + ');'
+            return 'KISSY.Template(' + t + ');';
         },
 
         baidutemplate: function (t) {
-            return 'baidu.template(' + t + ');'
+            return 'baidu.template(' + t + ');';
         }
-    }
+    };
 
-    var ln = grunt.util.normalizelf('\r\n');
+    var ln = grunt.util.normalizelf('\n');
     var fileNameReg = /\/([^\/\\]+?)(\.[a-zA-z\d]+)?$/gi;
 
     grunt.registerMultiTask('cptpl', 'Compiled template files into JavaScript files', function () {
@@ -75,44 +75,65 @@ module.exports = function (grunt) {
                 }
             }).map(function (filepath) {
                     // Read file source.
-                    return {
-                        content: grunt.file.read(filepath),
-                        name: fileNameReg.exec(filepath)[1]
-                    };
+                    var name = filepath.replace('\\', '\/')
+                        .split('\/')
+                        .pop()
+                        .replace(/\..*$/, '');
+                    var content = grunt.util.normalizelf(grunt.file.read(filepath))
+                        .split(ln)
+                        .map(function (line) {return line.trim();})
+                        .join('')
+                        .replace(/\"/gi, '\\\"')
+                        .replace(/\'/gi, '\\\'')
+                        .trim();
+
+                    name = options.reName(name);
+
+                    var start, end;
+                    content = ENGINES_MAP[options.engine.toLowerCase()]('\'' + content + '\'');
+
+                    switch (options.context){
+                        case '{AMD}':
+                            start = ';define(function() {' + ln + '    return ';
+                            end   = ln + '})';
+                            break;
+                        case '{CMD}':
+                            start = ';define(function(require, exports, module) {' + ln + '    module.exports = ';
+                            end   = ln + '})';
+                            break;
+                        default:
+                            start = ';' + options.context + '.' + name + ' = ';
+                            end   = '';
+                    }
+                    content = options.banner + start + content + end;
+
+                    return {name: name,content: content};
             });
 
-            // Ouput into js files
-            src.forEach(function (item, i, src) {
-                var start, end;
-                var dest = f.dest.charAt(f.dest.length-1) === '/' ? f.dest : f.dest + '/';
-                var name = options.reName(item.name);
-                var content = ENGINES_MAP[options.engine.toLowerCase()]('\'' + item.content
-                    .replace(/\n|\r|\r\n|\t/gi, '')
-                    .replace(/\"/gi, '\\\"')
-                    .replace(/\'/gi, '\\\'')
-                    .trim() + '\''
-                );
+            var dest = f.dest;
+            if (endsWith(dest, ".js")) {
 
-                switch (options.context){
-                    case '{AMD}':
-                        start = ';define(function() { ' + ln + '    return ';
-                        end   = ln + '});'
-                        break;
-                    case '{CMD}':
-                        start = ';define(function(require, exports, module) {' + ln + '    module.exports = ';
-                        end   = ln + '});'
-                        break;
-                    default:
-                        start = ';' + options.context + '.' + name + ' = ';
-                        end   = '';
-                }
-                content = options.banner + start + content + end;
-                grunt.file.write(dest + name + '.js', content);
-            });
+                grunt.file.write(dest, src.map(function (item, i, src) {
+                    return item.content;
+                }).join(ln + ln));
 
-            // Print a success message.
-            grunt.log.writeln(src.length + ' files created.');
+                grunt.log.writeln(dest + ' created.');
+
+            } else {
+                dest = dest.charAt(dest.length-1) === '/' ? dest : dest + '/';
+                // Ouput into js files
+                src.forEach(function (item, i, src) {
+                    grunt.file.write(dest + item.name + '.js', item.content);
+                });
+
+                // Print a success message.
+                grunt.log.writeln(src.length + ' files created.');
+            }
         });
     });
 
+    function endsWith(str, suffix) {
+        var index = str.length - suffix.length;
+        return index >= 0 && str.indexOf(suffix, index) == index;
+    }
 };
