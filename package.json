@@ -1,7 +1,7 @@
 {
     "name": "grunt-cptpl",
     "description": "Compiled template files into JavaScript files",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "homepage": "https://github.com/hanan198501/grunt-cptpl",
     "author": {
         "name": "hanan",
